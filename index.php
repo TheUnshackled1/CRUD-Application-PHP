@@ -16,7 +16,7 @@
 
 <table class="table table-bordered table-striped">
     <tr>
-        <th>ID</th>
+        <th>#</th>
         <th>Name</th>
         <th>Type</th>
         <th>Price</th>
@@ -34,10 +34,11 @@ $predefined = [
     'Moka Pot'
 ];
 $result = mysqli_query($conn, "SELECT * FROM tbl_coffee");
+$counter = 1;
 while ($row = mysqli_fetch_assoc($result)) {
 ?>
 <tr>
-    <td><?= $row['coffee_id'] ?></td>
+    <td><?= $counter++ ?></td>
     <td>
         <?php if (in_array($row['coffee_name'], $predefined)) { ?>
             <?= $row['coffee_name'] ?>
