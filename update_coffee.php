@@ -38,7 +38,7 @@
         $price = $_POST['price'];
         $query = "UPDATE tbl_coffee SET coffee_name='$name', coffee_type='$type', price='$price' WHERE coffee_id=$id";
         mysqli_query($conn, $query);
-        header("Location: index.php?success=update");
+        header("Location: index.php?success=update&coffee=" . urlencode($name));
         exit();
     }
     ?>
