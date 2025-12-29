@@ -63,6 +63,12 @@
 <body>
 <div class="container">
     <h2>Add Coffee</h2>
+    <?php if (isset($_GET['success']) && $_GET['success'] === '1') { ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Coffee added successfully!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php } ?>
     <form method="POST" class="mb-3">
         <div class="mb-3">
             <label>Temperature Category:</label>
@@ -98,7 +104,8 @@
                       VALUES ('$name', '$type', '$price')";
 
             mysqli_query($conn, $query);
-            header("Location: index.php");
+            header("Location: index.php?success=add&coffee=" . urlencode($name));
+            exit();
         } else {
             echo '<div class="alert alert-danger mt-2">Please select or type a coffee name.</div>';
         }

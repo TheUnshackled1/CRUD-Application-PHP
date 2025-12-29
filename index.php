@@ -12,11 +12,24 @@
 <?php require_once("includes/db.php"); ?>
 
 <h2>Coffee List</h2>
+<?php if (isset($_GET['success'])) {
+    $msg = '';
+    $coffee = isset($_GET['coffee']) ? htmlspecialchars($_GET['coffee']) : '';
+    if ($_GET['success'] === 'add') $msg = "Coffee <b>$coffee</b> added successfully!";
+    if ($_GET['success'] === 'update') $msg = "Coffee <b>$coffee</b> updated successfully!";
+    if ($_GET['success'] === 'delete') $msg = "Coffee <b>$coffee</b> deleted successfully!";
+    if ($msg) {
+        echo '<div class="alert alert-success alert-dismissible fade show" role="alert">'.
+            $msg.'
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>';
+    }
+} ?>
 <a href="add_coffee.php" class="btn btn-primary mb-3">➕ Add Coffee</a>
 
 <table class="table table-bordered table-striped">
     <tr>
-        <th>#</th>
+        <th>ID</th>
         <th>Name</th>
         <th>Type</th>
         <th>Price</th>
