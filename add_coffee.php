@@ -13,11 +13,28 @@
     <form method="POST" class="mb-3">
         <div class="mb-3">
             <label>Name:</label>
-            <input type="text" name="name" class="form-control" required>
+            <input list="coffee_names" name="coffee_name" class="form-control" placeholder="Select or type a coffee name" required>
+            <datalist id="coffee_names">
+                <option value="Drip Coffee">
+                <option value="Espresso">
+                <option value="French Press">
+                <option value="Pour Over">
+                <option value="Cold Brew">
+                <option value="AeroPress">
+                <option value="Moka Pot">
+            </datalist>
+            <small class="text-muted">Select from the list or type your own coffee name.</small>
         </div>
         <div class="mb-3">
-            <label>Type:</label>
-            <input type="text" name="type" class="form-control" required>
+            <label>Temperature Category:</label>
+            <select name="type" class="form-select" required>
+                <option value="">-- Select Temperature --</option>
+                <option value="Hot">Hot</option>
+                <option value="Iced">Iced</option>
+                <option value="Cold Brew">Cold Brew</option>
+                <option value="Blended">Blended</option>
+                <option value="Other">Other</option>
+            </select>
         </div>
         <div class="mb-3">
             <label>Price:</label>
@@ -30,15 +47,19 @@
     require_once("includes/db.php");
 
     if (isset($_POST['save'])) {
-        $name  = $_POST['name'];
+        $name = $_POST['coffee_name'];
         $type  = $_POST['type'];
         $price = $_POST['price'];
 
-        $query = "INSERT INTO tbl_coffee (coffee_name, coffee_type, price)
-                  VALUES ('$name', '$type', '$price')";
+        if (!empty($name)) {
+            $query = "INSERT INTO tbl_coffee (coffee_name, coffee_type, price)
+                      VALUES ('$name', '$type', '$price')";
 
-        mysqli_query($conn, $query);
-        header("Location: index.php");
+            mysqli_query($conn, $query);
+            header("Location: index.php");
+        } else {
+            echo '<div class="alert alert-danger mt-2">Please select or type a coffee name.</div>';
+        }
     }
     ?>
 </div>
