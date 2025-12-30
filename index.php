@@ -68,7 +68,13 @@ if (mysqli_num_rows($result) === 0) {
             </form>
         <?php } ?>
     </td>
-    <td><?= $row['coffee_type'] ?></td>
+    <td>
+        <?php
+        // Always show the value of temperature_category if it exists, otherwise coffee_type
+        $typeValue = isset($row['temperature_category']) ? $row['temperature_category'] : $row['coffee_type'];
+        echo htmlspecialchars($typeValue);
+        ?>
+    </td>
     <td><?= $row['price'] ?></td>
     <td>
         <a href="update_coffee.php?id=<?= $row['coffee_id'] ?>" class="btn btn-sm btn-warning">Edit</a> |
