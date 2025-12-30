@@ -12,7 +12,8 @@
 <?php require_once("includes/db.php"); ?>
 
 <h2>Coffee List</h2>
-<?php if (isset($_GET['success'])) {
+<?php
+if (isset($_GET['success'])) {
     $msg = '';
     $coffee = isset($_GET['coffee']) ? htmlspecialchars($_GET['coffee']) : '';
     if ($_GET['success'] === 'add') $msg = "Coffee <b>$coffee</b> added successfully!";
@@ -24,7 +25,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
     }
-} ?>
+}
+?>
 <a href="add_coffee.php" class="btn btn-primary mb-3">➕ Add Coffee</a>
 
 <table class="table table-bordered table-striped">
@@ -48,7 +50,10 @@ $predefined = [
 ];
 $result = mysqli_query($conn, "SELECT * FROM tbl_coffee");
 $counter = 1;
-while ($row = mysqli_fetch_assoc($result)) {
+if (mysqli_num_rows($result) === 0) {
+    echo '<tr><td colspan="5" class="text-center">No coffee available</td></tr>';
+} else {
+    while ($row = mysqli_fetch_assoc($result)) {
 ?>
 <tr>
     <td><?= $counter++ ?></td>
@@ -70,7 +75,9 @@ while ($row = mysqli_fetch_assoc($result)) {
         <a href="delete_coffee.php?id=<?= $row['coffee_id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this coffee?');">Delete</a>
     </td>
 </tr>
-<?php } ?>
+<?php }
+}
+?>
 </table>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
